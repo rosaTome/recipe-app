@@ -1,11 +1,14 @@
 package com.example.recipe_app.controller;
 
+import com.example.recipe_app.exception.ResourceNotFoundException;
 import com.example.recipe_app.model.MainRecipe;
 import com.example.recipe_app.repository.MainRecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 import java.util.List;
 
@@ -22,6 +25,11 @@ public class MainRecipeController {
     @GetMapping
     public List<MainRecipe> getAllMainRecipes() {
         return mainRecipeRepository.findAll();
+    }
+
+    @GetMapping("/{id")
+    public MainRecipe getMainRecipeById(@PathVariable Long id) {
+        return mainRecipeRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Main Recipe not found"));
     }
 }
 
